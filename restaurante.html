@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuestro restaurante | Órale K Rico</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<section class="page-hero has-bg" style="--hero-img:url('/img/restaurante-interior.jpg');">
+  <div class="page-hero-inner">
+    <h1>NUESTRO RESTAURANTE</h1>
+    <p>Un pedacito de México en el corazón de El Carmen de Viboral.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="about-wrap">
+    <img src="img/restaurante-interior.jpg" alt="Ambiente taquería mexicana">
+    <div>
+      <h2 class="section-title" id="aboutTitle">Nuestra historia</h2>
+      <p id="aboutText"></p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section-title">Nuestro ambiente</h2>
+  <p class="section-sub">Colores, papel picado y calaveras — inspirados en el Día de Muertos.</p>
+  <div class="photo-grid">
+    <img src="img/restaurante-ambiente1.jpg" alt="Interior de la taquería" loading="lazy">
+    <img src="img/restaurante-ambiente2.jpg" alt="Ambiente cálido del restaurante" loading="lazy">
+    <img src="img/restaurante-ambiente3.jpg" alt="Rincón decorado del restaurante" loading="lazy">
+    <img src="img/comida-mexicana.jpg" alt="Platillos servidos en la mesa" loading="lazy">
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section-title">Por qué visitarnos</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="ic-badge"><svg class="ic-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21h10M8 21v-6M16 21v-6M6 11a4 4 0 0 1 3-8 3.5 3.5 0 0 1 6 0 4 4 0 0 1 3 8c0 2-1 4-3 4H9c-2 0-3-2-3-4z"/></svg></div>
+      <h4>Recetas tradicionales</h4><p>Preparadas como en las calles de México, sin atajos.</p>
+    </div>
+    <div class="feature-card">
+      <div class="ic-badge"><svg class="ic-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M12 13l1 2 2 .3-1.5 1.4.4 2.1L12 17.7l-1.9 1.1.4-2.1L9 15.3l2-.3z" fill="currentColor" stroke="none"/></svg></div>
+      <h4>Eventos especiales</h4><p>Promos como Ceviche al Barril y Taco Tuesday cada semana.</p>
+    </div>
+    <div class="feature-card">
+      <div class="ic-badge"><svg class="ic-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 21v-1c0-3 3-5 7-5s7 2 7 5v1"/><circle cx="17" cy="9" r="2.4"/><path d="M16 21v-1c0-1.8-.8-3.3-2-4.4"/></svg></div>
+      <h4>Ideal para grupos</h4><p>Mesas al aire libre, ambiente familiar y buena música.</p>
+    </div>
+    <div class="feature-card">
+      <div class="ic-badge"><svg class="ic-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="18" r="2.2"/><circle cx="18" cy="18" r="2.2"/><path d="M5 18h4l2-5h4l2 3h1"/><path d="M9 13V8h3"/></svg></div>
+      <h4>Domicilios y para recoger</h4><p>Pide fácil por WhatsApp desde nuestro menú en línea.</p>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Carrito de compra">
+  <div class="drawer-head"><h3 id="drawerTitle">Tu pedido</h3><button class="close-btn" id="closeDrawerBtn">✕</button></div>
+  <div class="drawer-body" id="cartView">
+    <div class="empty-cart" id="emptyCart">Aún no has agregado nada.<br>Ve al menú y arma tu antojo.<br><br><a href="menu.html" class="cta-btn" style="margin-top:10px;">Ir al menú</a></div>
+    <div id="cartLines"></div>
+  </div>
+  <div class="drawer-foot" id="cartFoot" style="display:none;">
+    <div class="subtotal-row"><span>Total</span><span id="subtotalVal">$0</span></div>
+    <a href="menu.html" class="checkout-btn" style="display:block; text-align:center; text-decoration:none;">Ir al menú a continuar ➜</a>
+  </div>
+</aside>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const s = okrGetSettings();
+    document.getElementById('aboutText').textContent = s.aboutText;
+  });
+</script>
+</body>
+</html>

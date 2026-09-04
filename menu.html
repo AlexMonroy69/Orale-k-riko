@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menú | Órale K Rico</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<section class="page-hero has-bg" style="padding:40px 20px 30px; --hero-img:url('/img/tacos-salsa.jpg');">
+  <div class="page-hero-inner">
+    <h1 style="font-size:clamp(1.7rem,6vw,2.3rem);">NUESTRO MENÚ</h1>
+    <p>Elige, agrega al carrito y pide directo por WhatsApp.</p>
+  </div>
+</section>
+
+<nav class="cat-nav" id="catNav">
+  <button class="active" data-cat="tacos">🌮 Tacos</button>
+  <button data-cat="quesadillas">🧀 Quesadillas</button>
+  <button data-cat="dorilokos">🌶️ Dorilokos</button>
+  <button data-cat="ezquite">🌽 Ezquite</button>
+  <button data-cat="adiciones">🧂 Adiciones</button>
+</nav>
+
+<main class="section" id="menu" style="padding-top:8px;">
+  <!-- Las secciones de categorías se generan dinámicamente por JS -->
+</main>
+
+<div id="site-footer"></div>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Carrito de compra">
+  <div class="drawer-head">
+    <h3 id="drawerTitle">Tu pedido</h3>
+    <button class="close-btn" id="closeDrawerBtn">✕</button>
+  </div>
+
+  <div class="drawer-body" id="cartView">
+    <div class="empty-cart" id="emptyCart">Aún no has agregado nada.<br>Explora el menú y arma tu antojo.</div>
+    <div id="cartLines"></div>
+  </div>
+
+  <div class="drawer-foot" id="cartFoot" style="display:none;">
+    <div class="subtotal-row"><span>Total</span><span id="subtotalVal">$0</span></div>
+    <button class="checkout-btn" id="goCheckoutBtn">Continuar pedido</button>
+  </div>
+
+  <div class="drawer-body hidden" id="checkoutView">
+    <a class="back-link" id="backToCartBtn">← Volver al carrito</a>
+
+    <div class="form-group">
+      <label>Tipo de entrega</label>
+      <div class="radio-row">
+        <div class="radio-opt active" data-type="domicilio">Domicilio</div>
+        <div class="radio-opt" data-type="recoger">Recoger en tienda</div>
+      </div>
+    </div>
+
+    <div class="form-group"><label>Nombre completo</label><input type="text" id="custName" placeholder="Ej: Juan Pérez"></div>
+    <div class="form-group"><label>Número de teléfono</label><input type="tel" id="custPhone" placeholder="Ej: 3001234567"></div>
+
+    <div class="form-group" id="addressGroup">
+      <label>Dirección exacta / barrio / punto de referencia</label>
+      <textarea id="custAddress" rows="2" placeholder="Ej: Calle 10 #5-20. También puedes pegar aquí el link de tu ubicación de Google Maps."></textarea>
+      <button type="button" class="gps-btn" id="gpsBtn">Usar mi ubicación actual (GPS)</button>
+      <div class="gps-status" id="gpsStatus">Si el botón no funciona, abre Google Maps, toca tu punto y usa "Compartir" para copiar el link, luego pégalo arriba.</div>
+    </div>
+
+    <div class="form-group">
+      <label>Método de pago</label>
+      <select id="payMethod">
+        <option value="Efectivo">Efectivo</option>
+        <option value="Transferencia">Transferencia</option>
+      </select>
+    </div>
+
+    <div class="form-group"><label>Notas adicionales (opcional)</label><textarea id="custNotes" rows="2" placeholder="Ej: sin cebolla, tocan el timbre 2, etc."></textarea></div>
+  </div>
+
+  <div class="drawer-foot hidden" id="checkoutFoot">
+    <div class="subtotal-row"><span>Subtotal</span><span id="subtotalVal2">$0</span></div>
+    <div class="subtotal-row" id="feeRow"><span>Domicilio</span><span id="feeVal">$0</span></div>
+    <div class="total-row"><span>Total</span><span id="totalVal">$0</span></div>
+    <button class="checkout-btn" id="sendWaBtn">Enviar pedido por WhatsApp</button>
+  </div>
+</aside>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  const MENU = okrGetMenu();
+  const OKR_ICON_PLUS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>';
+  const OKR_ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+
+  const MENU_DIVIDERS = {
+    quesadillas: {img:'img/comida-mexicana.jpg', text:'Sabor auténtico en cada bocado'},
+    ezquite: {img:'img/tacos-camaron.jpg', text:'Todo hecho al momento, como en la calle'},
+    adiciones: {img:'img/tacos-mesa.jpg', text:'El toque perfecto para tu pedido'}
+  };
+
+  function renderMenu(){
+    Object.keys(MENU).forEach(cat=>{
+      const items = MENU[cat];
+
+      const divider = MENU_DIVIDERS[cat];
+      if(divider){
+        const bar = document.createElement('div');
+        bar.className = 'menu-divider';
+        bar.style.backgroundImage = `url('${divider.img}')`;
+        bar.innerHTML = `<span>${divider.text}</span>`;
+        document.getElementById('menu').appendChild(bar);
+      }
+
+      const section = document.createElement('section');
+      section.className = 'cat-section';
+      section.id = 'cat-'+cat;
+      section.innerHTML = `
+        <h2 class="cat-title"><span class="accent">${OKR_CAT_LABELS[cat]}</span></h2>
+        <p class="cat-desc"></p>
+        <div class="grid" id="grid-${cat}"></div>
+      `;
+      document.getElementById('menu').appendChild(section);
+
+      const grid = section.querySelector('.grid');
+      grid.innerHTML = items.map(it => `
+        <div class="item-card" data-id="${it.id}">
+          ${it.img ? `<img class="item-img" src="${it.img}" alt="${it.name}">` : ''}
+          <div class="item-card-body">
+            <div class="item-top">
+              <div class="item-name">${it.name}</div>
+              <div class="item-price">${okrFmt(it.price)}</div>
+            </div>
+            <div class="item-desc">${it.desc}</div>
+            <div class="item-bottom">
+              <div class="stepper">
+                <button class="dec" aria-label="Restar">−</button>
+                <span class="qty">1</span>
+                <button class="inc" aria-label="Sumar">+</button>
+              </div>
+              <button class="add-btn">${OKR_ICON_PLUS}Agregar</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    });
+
+    document.querySelectorAll('.item-card').forEach(card=>{
+      const qtyEl = card.querySelector('.qty');
+      let qty = 1;
+      card.querySelector('.inc').addEventListener('click', ()=>{ qty++; qtyEl.textContent = qty; });
+      card.querySelector('.dec').addEventListener('click', ()=>{ if(qty>1){ qty--; qtyEl.textContent = qty; } });
+      card.querySelector('.add-btn').addEventListener('click', (e)=>{
+        const id = card.dataset.id;
+        const allItems = Object.values(MENU).flat();
+        const item = allItems.find(i=>i.id===id);
+        okrAddToCart(item, qty);
+        const btn = e.currentTarget;
+        btn.innerHTML = OKR_ICON_CHECK + '¡Agregado!';
+        btn.classList.add('added');
+        setTimeout(()=>{ btn.innerHTML = OKR_ICON_PLUS + 'Agregar'; btn.classList.remove('added'); }, 900);
+        qty = 1; qtyEl.textContent = 1;
+      });
+    });
+  }
+  renderMenu();
+
+  const catNavBtns = document.querySelectorAll('.cat-nav button');
+  let suppressSpy = false;
+  catNavBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      catNavBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      suppressSpy = true;
+      document.getElementById('cat-'+btn.dataset.cat).scrollIntoView({behavior:'smooth', block:'start'});
+      setTimeout(()=>{ suppressSpy = false; }, 700);
+    });
+  });
+
+  const catSpy = new IntersectionObserver((entries)=>{
+    if(suppressSpy) return;
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const cat = entry.target.id.replace('cat-','');
+        catNavBtns.forEach(b=> b.classList.toggle('active', b.dataset.cat===cat));
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  document.querySelectorAll('.cat-section').forEach(sec => catSpy.observe(sec));
+</script>
+</body>
+</html>

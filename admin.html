@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de administrador | Órale K Rico</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="admin-login-wrap" id="loginBox">
+  <div class="admin-login">
+    <img src="img/logo.png" alt="Órale K Rico" class="admin-login-logo">
+    <h2>Acceso administrador</h2>
+    <p class="section-sub" style="text-align:center; margin-bottom:18px;">Panel de uso interno</p>
+    <div class="form-group"><label>Usuario</label><input type="text" id="loginUser" autocomplete="username"></div>
+    <div class="form-group"><label>Contraseña</label><input type="password" id="loginPass" autocomplete="current-password"></div>
+    <button class="save-btn" id="loginBtn" style="width:100%;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg>
+      Entrar
+    </button>
+    <div class="login-error hidden" id="loginError">Usuario o contraseña incorrectos.</div>
+    <a href="index.html" class="admin-sidebar-link" style="display:block; text-align:center; margin-top:18px;">← Ver el sitio público</a>
+  </div>
+</div>
+
+<div class="admin-shell hidden" id="adminShell">
+<div class="admin-layout">
+
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-brand">
+      <img src="img/logo.png" alt="Órale K Rico" class="admin-sidebar-logo">
+      <span>Uso interno</span>
+    </div>
+    <nav class="admin-nav">
+      <button class="active" data-tab="resumen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+        Resumen
+      </button>
+      <button data-tab="general">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        General
+      </button>
+      <button data-tab="promos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 12.6 12 21.2 2.8 12A2 2 0 0 1 2.2 10.6L3 4l6.6-.8A2 2 0 0 1 11 3.8L20.6 12.6z"/><circle cx="7.5" cy="7.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+        Promociones
+      </button>
+      <button data-tab="menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        Menú
+      </button>
+      <button data-tab="galeria">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+        Galería
+      </button>
+    </nav>
+    <div class="admin-sidebar-foot">
+      <button class="ghost-btn" id="logoutBtn" style="width:100%;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        Cerrar sesión
+      </button>
+      <a href="index.html" class="admin-sidebar-link">← Ver el sitio público</a>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+
+  <!-- RESUMEN -->
+  <div class="admin-panel active" id="panel-resumen">
+    <h1 class="admin-page-title">Resumen</h1>
+    <p class="section-sub" style="margin-bottom:20px;">Un vistazo rápido a lo que tienes cargado en el sitio.</p>
+    <div class="dash-stats" id="dashStats"></div>
+
+    <div class="admin-card">
+      <h3>Accesos rápidos</h3>
+      <div class="dash-quicklinks">
+        <a class="dash-quicklink" href="index.html" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+          Ver sitio público
+        </a>
+        <a class="dash-quicklink" href="menu.html" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+          Ver menú público
+        </a>
+        <a class="dash-quicklink" id="dashWaLink" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5C10 9 9.5 7.8 9.3 7.3c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.4z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5-1.3c1.4.8 3.1 1.2 5 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+          Abrir WhatsApp del negocio
+        </a>
+        <button class="dash-quicklink" data-goto="promos" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 12.6 12 21.2 2.8 12A2 2 0 0 1 2.2 10.6L3 4l6.6-.8A2 2 0 0 1 11 3.8L20.6 12.6z"/></svg>
+          Gestionar promociones
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GENERAL -->
+  <div class="admin-panel" id="panel-general">
+    <div class="admin-card">
+      <h3>Información del negocio</h3>
+      <div class="form-group"><label>Nombre del restaurante</label><input type="text" id="fName"></div>
+      <div class="form-group"><label>Frase / tagline (aparece bajo el logo)</label><input type="text" id="fTagline"></div>
+      <div class="form-group"><label>Texto del inicio (hero)</label><textarea id="fHeroText" rows="2"></textarea></div>
+      <div class="form-group"><label>Texto "Nuestra historia" (página Restaurante)</label><textarea id="fAboutText" rows="4"></textarea></div>
+    </div>
+    <div class="admin-card">
+      <h3>Datos de contacto</h3>
+      <div class="form-group"><label>Número de WhatsApp (solo números, con indicativo 57)</label><input type="text" id="fWhatsapp"></div>
+      <div class="form-group"><label>Teléfono para mostrar</label><input type="text" id="fPhone"></div>
+      <div class="form-group"><label>Dirección</label><input type="text" id="fAddress"></div>
+      <div class="form-group"><label>Horario</label><input type="text" id="fHours"></div>
+      <div class="form-group"><label>Instagram (link completo, opcional)</label><input type="text" id="fInstagram" placeholder="https://instagram.com/tu_usuario"></div>
+      <div class="form-group"><label>Facebook (link completo, opcional)</label><input type="text" id="fFacebook"></div>
+    </div>
+    <div class="admin-card">
+      <h3>Domicilio</h3>
+      <div class="form-group"><label>Valor del domicilio ($)</label><input type="number" id="fDeliveryFee"></div>
+    </div>
+    <button class="save-btn" id="saveGeneralBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+      Guardar cambios generales
+    </button>
+  </div>
+
+  <!-- PROMOS -->
+  <div class="admin-panel" id="panel-promos">
+    <div class="admin-card">
+      <h3>Promociones y eventos (se muestran en el Inicio)</h3>
+      <div id="promoList"></div>
+      <button class="ghost-btn" id="addPromoBtn" style="margin-top:10px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        Agregar promoción
+      </button>
+    </div>
+    <button class="save-btn" id="savePromosBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+      Guardar promociones
+    </button>
+  </div>
+
+  <!-- MENU -->
+  <div class="admin-panel" id="panel-menu">
+    <div class="admin-card">
+      <div class="admin-tabs" id="menuCatTabs"></div>
+      <div id="menuCatContent"></div>
+    </div>
+    <button class="save-btn" id="saveMenuBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+      Guardar menú
+    </button>
+  </div>
+
+  <!-- GALERIA -->
+  <div class="admin-panel" id="panel-galeria">
+    <div class="admin-card">
+      <h3>Fotos de la galería</h3>
+      <label class="file-btn">Subir fotos (cámara o galería)
+        <input type="file" id="galleryUpload" accept="image/*" multiple>
+      </label>
+      <p class="section-sub" style="margin-top:10px;">Puedes seleccionar varias fotos a la vez. Se comprimen automáticamente para no llenar el almacenamiento.</p>
+      <div class="admin-gallery-grid" id="adminGalleryGrid" style="margin-top:16px;"></div>
+    </div>
+  </div>
+
+  </main>
+</div>
+</div>
+
+<div class="toast" id="toast">Guardado ✓</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', ()=>{
+
+    function showToast(msg){
+      const t = document.getElementById('toast');
+      t.textContent = msg || 'Guardado ✓';
+      t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'), 2200);
+    }
+
+    /* ---------- LOGIN ---------- */
+    const loginBox = document.getElementById('loginBox');
+    const adminShell = document.getElementById('adminShell');
+    function checkAuth(){
+      if(okrIsAdminLoggedIn()){
+        loginBox.classList.add('hidden');
+        adminShell.classList.remove('hidden');
+        loadAllPanels();
+      } else {
+        loginBox.classList.remove('hidden');
+        adminShell.classList.add('hidden');
+      }
+    }
+    document.getElementById('loginBtn').addEventListener('click', ()=>{
+      const user = document.getElementById('loginUser').value.trim();
+      const pass = document.getElementById('loginPass').value;
+      if(okrAdminLogin(user, pass)){
+        document.getElementById('loginError').classList.add('hidden');
+        checkAuth();
+      } else {
+        document.getElementById('loginError').classList.remove('hidden');
+      }
+    });
+    document.getElementById('loginPass').addEventListener('keydown', (e)=>{ if(e.key==='Enter') document.getElementById('loginBtn').click(); });
+    document.getElementById('logoutBtn').addEventListener('click', ()=>{ okrAdminLogout(); checkAuth(); });
+
+    /* ---------- NAV ---------- */
+    function goToTab(tab){
+      document.querySelectorAll('.admin-nav > button').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+      document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+      document.getElementById('panel-'+tab).classList.add('active');
+      document.querySelector('.admin-main').scrollTo({top:0});
+    }
+    document.querySelectorAll('.admin-nav > button').forEach(btn=>{
+      btn.addEventListener('click', ()=> goToTab(btn.dataset.tab));
+    });
+    document.querySelectorAll('[data-goto]').forEach(btn=>{
+      btn.addEventListener('click', ()=> goToTab(btn.dataset.goto));
+    });
+
+    function loadAllPanels(){
+      loadGeneral();
+      loadPromos();
+      loadMenu();
+      loadGallery();
+      renderDashboard();
+    }
+
+    /* ---------- RESUMEN / DASHBOARD ---------- */
+    function renderDashboard(){
+      const s = okrGetSettings();
+      const menu = okrGetMenu();
+      const itemCount = Object.values(menu).reduce((sum, arr)=> sum + arr.length, 0);
+      const catCount = Object.keys(menu).length;
+      const activePromos = okrGetPromos().filter(p=>p.active).length;
+      const galleryCount = okrGetGallery().length;
+
+      document.getElementById('dashStats').innerHTML = `
+        <div class="dash-stat-card"><div class="dash-num">${itemCount}</div><div class="dash-label">Platillos en el menú</div></div>
+        <div class="dash-stat-card"><div class="dash-num">${catCount}</div><div class="dash-label">Categorías</div></div>
+        <div class="dash-stat-card"><div class="dash-num">${activePromos}</div><div class="dash-label">Promociones activas</div></div>
+        <div class="dash-stat-card"><div class="dash-num">${galleryCount}</div><div class="dash-label">Fotos en galería</div></div>
+      `;
+      document.getElementById('dashWaLink').href = `https://wa.me/${s.whatsapp}`;
+    }
+
+    /* ---------- GENERAL ---------- */
+    function loadGeneral(){
+      const s = okrGetSettings();
+      fName.value = s.name; fTagline.value = s.tagline;
+      fHeroText.value = s.heroText; fAboutText.value = s.aboutText;
+      fWhatsapp.value = s.whatsapp; fPhone.value = s.phone;
+      fAddress.value = s.address; fHours.value = s.hours;
+      fInstagram.value = s.instagram || ''; fFacebook.value = s.facebook || '';
+      fDeliveryFee.value = s.deliveryFee;
+    }
+    document.getElementById('saveGeneralBtn').addEventListener('click', ()=>{
+      const s = okrGetSettings();
+      s.name = fName.value.trim() || s.name;
+      s.tagline = fTagline.value.trim();
+      s.heroText = fHeroText.value.trim();
+      s.aboutText = fAboutText.value.trim();
+      s.whatsapp = fWhatsapp.value.trim().replace(/\D/g,'');
+      s.phone = fPhone.value.trim();
+      s.address = fAddress.value.trim();
+      s.hours = fHours.value.trim();
+      s.instagram = fInstagram.value.trim();
+      s.facebook = fFacebook.value.trim();
+      s.deliveryFee = Number(fDeliveryFee.value) || 0;
+      if(okrSetSettings(s)){ showToast('Datos generales guardados ✓'); }
+    });
+
+    /* ---------- PROMOS ---------- */
+    let promosState = [];
+    function loadPromos(){
+      promosState = JSON.parse(JSON.stringify(okrGetPromos()));
+      renderPromoList();
+    }
+    function renderPromoList(){
+      const list = document.getElementById('promoList');
+      if(promosState.length===0){
+        list.innerHTML = '<p class="section-sub">No hay promociones. Agrega la primera.</p>';
+        return;
+      }
+      list.innerHTML = promosState.map((p,i)=>`
+        <div class="admin-item-row" data-i="${i}">
+          <img src="${p.img || ''}" alt="">
+          <div class="admin-item-fields">
+            <div style="display:flex; gap:8px;">
+              <select class="p-type" style="max-width:200px;">
+                <option value="evento" ${p.type!=='promo'?'selected':''}>Evento especial</option>
+                <option value="promo" ${p.type==='promo'?'selected':''}>Promoción recurrente</option>
+              </select>
+              <input type="text" class="p-badge" value="${p.badge}" placeholder="Etiqueta (ej: Todos los martes)">
+            </div>
+            <input type="text" class="p-title" value="${p.title}" placeholder="Título">
+            <textarea class="p-desc" rows="2" placeholder="Descripción">${p.desc}</textarea>
+            <label class="file-btn" style="width:fit-content;">Cambiar imagen<input type="file" class="p-img" accept="image/*"></label>
+            <label style="font-size:.8rem; display:flex; align-items:center; gap:6px;">
+              <input type="checkbox" class="p-active" ${p.active?'checked':''} style="width:auto;"> Promoción activa (visible en el Inicio)
+            </label>
+          </div>
+          <div class="admin-row-actions">
+            <button class="danger-btn del-promo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Eliminar</button>
+          </div>
+        </div>
+      `).join('');
+
+      list.querySelectorAll('.admin-item-row').forEach(row=>{
+        const i = Number(row.dataset.i);
+        row.querySelector('.p-type').addEventListener('change', e=> promosState[i].type = e.target.value);
+        row.querySelector('.p-badge').addEventListener('input', e=> promosState[i].badge = e.target.value);
+        row.querySelector('.p-title').addEventListener('input', e=> promosState[i].title = e.target.value);
+        row.querySelector('.p-desc').addEventListener('input', e=> promosState[i].desc = e.target.value);
+        row.querySelector('.p-active').addEventListener('change', e=> promosState[i].active = e.target.checked);
+        row.querySelector('.p-img').addEventListener('change', async (e)=>{
+          const file = e.target.files[0];
+          if(!file) return;
+          promosState[i].img = await okrCompressImage(file, 700);
+          renderPromoList();
+        });
+        row.querySelector('.del-promo').addEventListener('click', async ()=>{
+          const ok = await okrConfirm(`Vas a quitar "${promosState[i].title}" de las promociones.`, {danger:true, title:'Eliminar promoción', confirmText:'Eliminar'});
+          if(!ok) return;
+          promosState.splice(i,1);
+          renderPromoList();
+        });
+      });
+    }
+    document.getElementById('addPromoBtn').addEventListener('click', async ()=>{
+      const ok = await okrConfirm('Se agregará una nueva promoción a la lista.', {title:'Agregar promoción', confirmText:'Agregar'});
+      if(!ok) return;
+      promosState.push({id:okrUid('promo'), type:'evento', badge:'Nueva promo', title:'Título de la promo', desc:'Descripción de la promoción.', img:'', active:true});
+      renderPromoList();
+    });
+    document.getElementById('savePromosBtn').addEventListener('click', ()=>{
+      if(okrSetPromos(promosState)) showToast('Promociones guardadas ✓');
+    });
+
+    /* ---------- MENU ---------- */
+    let menuState = {};
+    let activeMenuCat = 'tacos';
+    function loadMenu(){
+      menuState = JSON.parse(JSON.stringify(okrGetMenu()));
+      const tabsEl = document.getElementById('menuCatTabs');
+      tabsEl.innerHTML = Object.keys(menuState).map(cat=>`<button data-cat="${cat}" class="${cat===activeMenuCat?'active':''}">${OKR_CAT_LABELS[cat]}</button>`).join('');
+      tabsEl.querySelectorAll('button').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          activeMenuCat = btn.dataset.cat;
+          tabsEl.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+          btn.classList.add('active');
+          renderMenuCat();
+        });
+      });
+      renderMenuCat();
+    }
+    function renderMenuCat(){
+      const content = document.getElementById('menuCatContent');
+      const items = menuState[activeMenuCat];
+      content.innerHTML = items.map((it,i)=>`
+        <div class="admin-item-row" data-i="${i}">
+          <img src="${it.img || ''}" style="${it.img?'':'display:flex;align-items:center;justify-content:center;'}" alt="">
+          <div class="admin-item-fields">
+            <input type="text" class="m-name" value="${it.name}" placeholder="Nombre">
+            <textarea class="m-desc" rows="2" placeholder="Descripción">${it.desc}</textarea>
+            <input type="number" class="m-price" value="${it.price}" placeholder="Precio">
+            <label class="file-btn" style="width:fit-content;">Cambiar foto<input type="file" class="m-img" accept="image/*"></label>
+          </div>
+          <div class="admin-row-actions">
+            <button class="danger-btn del-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Eliminar</button>
+          </div>
+        </div>
+      `).join('') + `<button class="ghost-btn add-item-btn" style="margin-top:10px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Agregar producto en ${OKR_CAT_LABELS[activeMenuCat]}</button>`;
+
+      content.querySelectorAll('.admin-item-row').forEach(row=>{
+        const i = Number(row.dataset.i);
+        row.querySelector('.m-name').addEventListener('input', e=> items[i].name = e.target.value);
+        row.querySelector('.m-desc').addEventListener('input', e=> items[i].desc = e.target.value);
+        row.querySelector('.m-price').addEventListener('input', e=> items[i].price = Number(e.target.value)||0);
+        row.querySelector('.m-img').addEventListener('change', async (e)=>{
+          const file = e.target.files[0];
+          if(!file) return;
+          const dataUrl = await okrCompressImage(file, 700);
+          items[i].img = dataUrl;
+          renderMenuCat();
+        });
+        row.querySelector('.del-item').addEventListener('click', async ()=>{
+          const ok = await okrConfirm(`Vas a quitar "${items[i].name}" del menú.`, {danger:true, title:'Eliminar producto', confirmText:'Eliminar'});
+          if(!ok) return;
+          items.splice(i,1);
+          renderMenuCat();
+        });
+      });
+      content.querySelector('.add-item-btn').addEventListener('click', async ()=>{
+        const ok = await okrConfirm(`Se agregará un nuevo producto en ${OKR_CAT_LABELS[activeMenuCat]}.`, {title:'Agregar producto', confirmText:'Agregar'});
+        if(!ok) return;
+        items.push({id:okrUid(activeMenuCat), name:'Nuevo producto', desc:'Descripción del producto.', price:0, img:''});
+        renderMenuCat();
+      });
+    }
+    document.getElementById('saveMenuBtn').addEventListener('click', ()=>{
+      if(okrSetMenu(menuState)) showToast('Menú guardado ✓');
+    });
+
+    /* ---------- GALERIA ---------- */
+    let galleryState = [];
+    function loadGallery(){
+      galleryState = JSON.parse(JSON.stringify(okrGetGallery()));
+      renderGallery();
+    }
+    function renderGallery(){
+      const grid = document.getElementById('adminGalleryGrid');
+      if(galleryState.length===0){
+        grid.innerHTML = '<p class="section-sub">Aún no has subido fotos.</p>';
+        return;
+      }
+      grid.innerHTML = galleryState.map((g,i)=>`
+        <div class="admin-gallery-item" data-i="${i}">
+          <img src="${g.src}" alt="Foto galería">
+          <div class="admin-gallery-item-actions">
+            <label class="change-gallery-item" title="Cambiar foto">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l4.5-6 3 4 2.5-3L20 16"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
+              <input type="file" class="gallery-item-file" accept="image/*">
+            </label>
+            <button class="del-gallery-item" title="Eliminar foto">✕</button>
+          </div>
+        </div>
+      `).join('');
+      grid.querySelectorAll('.admin-gallery-item').forEach(item=>{
+        const i = Number(item.dataset.i);
+        item.querySelector('.del-gallery-item').addEventListener('click', async ()=>{
+          const ok = await okrConfirm('Esta foto se quitará de la galería.', {danger:true, title:'Eliminar foto', confirmText:'Eliminar'});
+          if(!ok) return;
+          galleryState.splice(i,1);
+          okrSetGallery(galleryState);
+          renderGallery();
+          showToast('Foto eliminada');
+        });
+        item.querySelector('.gallery-item-file').addEventListener('change', async (e)=>{
+          const file = e.target.files[0];
+          if(!file) return;
+          const ok = await okrConfirm('La foto actual será reemplazada por la nueva que elegiste.', {title:'Cambiar foto', confirmText:'Cambiar'});
+          if(!ok){ e.target.value=''; return; }
+          const dataUrl = await okrCompressImage(file, 1100);
+          galleryState[i].src = dataUrl;
+          if(okrSetGallery(galleryState)){
+            renderGallery();
+            showToast('Foto reemplazada ✓');
+          }
+        });
+      });
+    }
+    document.getElementById('galleryUpload').addEventListener('change', async (e)=>{
+      const files = Array.from(e.target.files || []);
+      if(files.length===0) return;
+      const msg = files.length===1 ? 'Se subirá 1 foto nueva a la galería.' : `Se subirán ${files.length} fotos nuevas a la galería.`;
+      const ok = await okrConfirm(msg, {title:'Subir fotos', confirmText:'Subir'});
+      if(!ok){ e.target.value=''; return; }
+      for(const file of files){
+        try{
+          const dataUrl = await okrCompressImage(file, 1100);
+          galleryState.push({id:okrUid('photo'), src:dataUrl});
+        }catch(err){ /* ignora archivos que fallen */ }
+      }
+      if(okrSetGallery(galleryState)){
+        renderGallery();
+        showToast('Fotos subidas ✓');
+      }
+      e.target.value = '';
+    });
+
+    checkAuth();
+  });
+</script>
+</body>
+</html>

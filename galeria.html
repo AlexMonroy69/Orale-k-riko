@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galería | Órale K Rico</title>
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  .lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.9); display:flex; align-items:center; justify-content:center; z-index:200; opacity:0; pointer-events:none; transition:.2s; padding:20px; }
+  .lightbox.show{opacity:1; pointer-events:auto;}
+  .lightbox img{max-width:100%; max-height:85vh; border-radius:12px;}
+  .lightbox-close{ position:absolute; top:20px; right:20px; background:rgba(255,255,255,.15); color:#fff; width:40px; height:40px; border-radius:50%; font-size:1.2rem; }
+</style>
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<section class="page-hero has-bg" style="--hero-img:url('/img/comida-mexicana.jpg');">
+  <div class="page-hero-inner">
+    <h1>GALERÍA</h1>
+    <p>Un vistazo a nuestros platillos y al ambiente de la taquería.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="photo-grid" id="galleryGrid"></div>
+  <p id="galleryEmpty" class="section-sub hidden" style="margin-top:20px;">Todavía no hay fotos propias cargadas. Mientras tanto, aquí van algunas de referencia. El administrador puede subir fotos reales desde el panel de admin.</p>
+</section>
+
+<div id="site-footer"></div>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Carrito de compra">
+  <div class="drawer-head"><h3 id="drawerTitle">Tu pedido</h3><button class="close-btn" id="closeDrawerBtn">✕</button></div>
+  <div class="drawer-body" id="cartView">
+    <div class="empty-cart" id="emptyCart">Aún no has agregado nada.<br>Ve al menú y arma tu antojo.<br><br><a href="menu.html" class="cta-btn" style="margin-top:10px;">Ir al menú</a></div>
+    <div id="cartLines"></div>
+  </div>
+  <div class="drawer-foot" id="cartFoot" style="display:none;">
+    <div class="subtotal-row"><span>Total</span><span id="subtotalVal">$0</span></div>
+    <a href="menu.html" class="checkout-btn" style="display:block; text-align:center; text-decoration:none;">Ir al menú a continuar ➜</a>
+  </div>
+</aside>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">✕</button>
+  <img id="lightboxImg" src="" alt="Foto ampliada">
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  const STOCK_PHOTOS = [
+    'img/taco-lima.jpg',
+    'img/tacos-detalle.jpg',
+    'img/birria-tacos.jpg',
+    'img/tacos-mesa.jpg',
+    'img/tacos-salsa.jpg',
+    'img/tacos-camaron.jpg',
+    'img/comida-mexicana.jpg',
+    'img/restaurante-interior.jpg',
+    'img/restaurante-ambiente1.jpg',
+    'img/restaurante-ambiente2.jpg',
+    'img/restaurante-ambiente3.jpg',
+    'img/restaurante-barra.jpg'
+  ];
+
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const gallery = okrGetGallery();
+    const grid = document.getElementById('galleryGrid');
+    const emptyMsg = document.getElementById('galleryEmpty');
+
+    let photosToShow = gallery.map(g=>g.src);
+    if(photosToShow.length === 0){
+      photosToShow = STOCK_PHOTOS;
+      emptyMsg.classList.remove('hidden');
+    }
+
+    grid.innerHTML = photosToShow.map(src => `<img src="${src}" alt="Foto de Órale K Rico" loading="lazy">`).join('');
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    grid.querySelectorAll('img').forEach(img=>{
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', ()=>{
+        lightboxImg.src = img.src;
+        lightbox.classList.add('show');
+      });
+    });
+    document.getElementById('lightboxClose').addEventListener('click', ()=> lightbox.classList.remove('show'));
+    lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) lightbox.classList.remove('show'); });
+  });
+</script>
+</body>
+</html>
