@@ -76,15 +76,50 @@ function okrRenderHeader(activeHref){
       <a href="index.html" class="logo">
         ${logo}
       </a>
-      <ul class="nav-links">${links}</ul>
+      <ul class="nav-links" id="navLinks">${links}</ul>
       <div class="nav-right">
         <button class="cart-btn" id="openCartBtn" aria-label="Abrir carrito">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           <span class="cart-count hidden" id="cartCount">0</span>
         </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+          <svg class="icon-burger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
       </div>
     </div>
-  </header>`;
+  </header>
+  <div class="nav-backdrop" id="navBackdrop"></div>`;
+
+  okrInitMobileNav();
+}
+
+function okrInitMobileNav(){
+  const toggle = document.getElementById('menuToggle');
+  const links = document.getElementById('navLinks');
+  const backdrop = document.getElementById('navBackdrop');
+  if(!toggle || !links) return;
+
+  function closeMenu(){
+    toggle.classList.remove('open');
+    links.classList.remove('open');
+    if(backdrop) backdrop.classList.remove('show');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+  function openMenu(){
+    toggle.classList.add('open');
+    links.classList.add('open');
+    if(backdrop) backdrop.classList.add('show');
+    toggle.setAttribute('aria-expanded', 'true');
+  }
+  toggle.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    if(links.classList.contains('open')) closeMenu(); else openMenu();
+  });
+  links.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeMenu));
+  if(backdrop) backdrop.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
+  window.addEventListener('resize', ()=>{ if(window.innerWidth > 760) closeMenu(); });
 }
 
 const OKR_ICON_PIN = `<svg class="ic-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>`;
